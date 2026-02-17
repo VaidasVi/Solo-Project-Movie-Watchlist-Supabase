@@ -37,7 +37,6 @@ async function findMovies(searchvalue) {
 
 		// Check if the API returned an error (e.g., no movies found)
 		if (data.Response === "False") {
-			console.error("Error:", data.Error);
 			resultContainer.innerHTML = `
 				<div class="empty-state">
 					<p id="search-error">Unable to find what you're looking for. Please try another search.</p>
@@ -56,8 +55,6 @@ async function findMovies(searchvalue) {
 			const movieData = await movieRes.json();
 			foundMovieList.push(movieData);
 		}
-
-		console.log(foundMovieList);
 
 		let html = "";
 
@@ -102,7 +99,6 @@ async function findMovies(searchvalue) {
 			});
 		});
 	} catch (error) {
-		console.error("Error fetching movies:", error);
 		const loading = document.getElementById("loading");
 		if (loading) {
 			loading.style.display = "none";
@@ -155,7 +151,6 @@ async function addToWatchlist(movieData, button) {
 			button.disabled = false;
 		}, 2000);
 	} catch (error) {
-		console.error("Error adding to watchlist:", error);
 		alert("Failed to add movie to watchlist. Please try again.");
 		button.innerHTML = originalText;
 		button.disabled = false;
