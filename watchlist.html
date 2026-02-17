@@ -7,7 +7,7 @@
 			name="description"
 			content="Movie Watchlist - Search and save your favorite movies"
 		/>
-		<title>Movie Watchlist</title>
+		<title>My Watchlist</title>
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
@@ -19,12 +19,13 @@
 			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 		/>
 		<link rel="stylesheet" href="styles/index.css" />
+		<link rel="stylesheet" href="styles/watchlist.css" />
 	</head>
 	<body>
 		<header>
 			<div class="header-container">
-				<h1>Find your film</h1>
-				<h3><a href="watchlist.html">My Watchlist</a></h3>
+				<h1>My Watchlist</h1>
+				<h3><a href="index.html">Search for movies</a></h3>
 			</div>
 		</header>
 
@@ -41,14 +42,19 @@
 				</form>
 			</section>
 
-			<section id="results-section">
-				<div id="result-container">
+			<section id="watchlist-section">
+				<div id="watchlist-container">
 					<div id="loading" style="display: none">
 						<p>Loading...</p>
 					</div>
 					<div class="empty-state">
-						<i class="fa-solid fa-film"></i>
-						<p>Start exploring</p>
+						<p class="empty-title">
+							Your watchlist is looking a little empty...
+						</p>
+						<a href="index.html" class="add-movies-btn">
+							<i class="fa fa-plus-circle" aria-hidden="true"></i>
+							Let's add some movies!
+						</a>
 					</div>
 				</div>
 			</section>
@@ -58,6 +64,6 @@
 			<!--<p>&copy; 2026 Movie Watchlist</p>-->
 		</footer>
 
-		<script src="index.js" type="module"></script>
+		<script src="watchlist.js" type="module"></script>
 	</body>
 </html>

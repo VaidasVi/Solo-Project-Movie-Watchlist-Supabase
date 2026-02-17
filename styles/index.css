@@ -140,7 +140,7 @@ a {
 	text-align: center;
 }
 
-#result-card {
+.result-card {
 	max-width: 28.875rem;
 	width: 100%;
 	margin: 0 auto;
@@ -152,7 +152,7 @@ a {
 	border-bottom: 1.5px solid #e5e7eb;
 }
 
-#result-card #poster {
+.result-card .poster {
 	grid-column: 1;
 	grid-row: 1 / 4;
 	width: 100px;
@@ -160,7 +160,7 @@ a {
 	border-radius: 4px;
 }
 
-#result-card h2 {
+.result-card h2 {
 	grid-column: 2;
 	grid-row: 1;
 	margin: 0;
@@ -168,7 +168,7 @@ a {
 	font-weight: 400;
 }
 
-#result-card #rating {
+.result-card .rating {
 	grid-column: 3;
 	grid-row: 1;
 	display: flex;
@@ -176,18 +176,18 @@ a {
 	gap: 5px;
 }
 
-#result-card #rating .fa-star {
+.result-card .rating .fa-star {
 	font-size: 14px;
 	color: #fec654;
 }
 
-#result-card #rating span {
+.result-card .rating span {
 	font-size: 14px;
 	/*font-weight: 400;*/
 	color: #111827;
 }
 
-#result-card #info-container {
+.result-card .info-container {
 	grid-column: 2 / 4;
 	grid-row: 2;
 	display: flex;
@@ -196,13 +196,13 @@ a {
 	margin: 0;
 }
 
-#result-card #info-container p {
+.result-card .info-container p {
 	margin: 0;
 	font-size: 14px;
 	color: #111827;
 }
 
-#result-card #info-container button {
+.result-card .info-container button {
 	background: none;
 	border: none;
 	cursor: pointer;
@@ -215,11 +215,11 @@ a {
 	padding: 0;
 }
 
-#result-card #info-container button .fa-plus-circle {
+.result-card .info-container button .fa-plus-circle {
 	font-size: 16px;
 }
 
-#result-card > p {
+.result-card > p {
 	grid-column: 2 / 4;
 	grid-row: 3;
 	margin: 0;

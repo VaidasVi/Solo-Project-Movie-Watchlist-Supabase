@@ -1,3 +1,6 @@
+// Supabase integration - commented out for localStorage implementation
+// import { supabase } from "./supabase.js";
+
 const API_KEY = import.meta.env.VITE_OMDB_API_KEY;
 const searchForm = document.getElementById("search-form");
 const resultContainer = document.getElementById("result-container");
@@ -13,12 +16,14 @@ document.querySelector("form").addEventListener("submit", (e) => {
 
 async function findMovies(searchvalue) {
 	try {
-		// Show loading
+		// Show loading - recreate the loading div if needed
+		resultContainer.innerHTML = `
+			<div id="loading" style="display: block;">
+				<p>Loading...</p>
+			</div>
+		`;
+
 		const loading = document.getElementById("loading");
-		loading.style.display = "block";
-		if (emptyState) {
-			emptyState.style.display = "none";
-		}
 
 		const res = await fetch(
 			`https://www.omdbapi.com/?s=${searchvalue}&apikey=${API_KEY}`,
@@ -33,7 +38,6 @@ async function findMovies(searchvalue) {
 		// Check if the API returned an error (e.g., no movies found)
 		if (data.Response === "False") {
 			console.error("Error:", data.Error);
-			loading.style.display = "none";
 			resultContainer.innerHTML = `
 				<div class="empty-state">
 					<p id="search-error">Unable to find what you're looking for. Please try another search.</p>
@@ -57,23 +61,23 @@ async function findMovies(searchvalue) {
 
 		let html = "";
 
-		foundMovieList.forEach((card) => {
+		foundMovieList.forEach((card, index) => {
 			html += `
-				<div id="result-card">
+				<div class="result-card">
 					<img
 						src="${card.Poster}"
 						alt="${card.Title} poster"
-						id="poster"
+						class="poster"
 					/>
 					<h2>${card.Title}</h2>
-					<div id="rating">
+					<div class="rating">
 						<i class="fa fa-star" aria-hidden="true"></i>
 						<span>${card.imdbRating}</span>
 					</div>
-					<div id="info-container">
+					<div class="info-container">
 						<p>${card.Runtime}</p>
 						<p>${card.Genre}</p>
-						<button>
+						<button class="add-to-watchlist-btn" data-index="${index}">
 							<i
 								class="fa fa-plus-circle"
 								aria-hidden="true"
@@ -87,12 +91,57 @@ async function findMovies(searchvalue) {
 		});
 
 		resultContainer.innerHTML = html;
-		loading.style.display = "none";
+
+		// Add event listeners to all watchlist buttons
+		const watchlistButtons = document.querySelectorAll(".add-to-watchlist-btn");
+		watchlistButtons.forEach((button) => {
+			button.addEventListener("click", async () => {
+				const index = button.getAttribute("data-index");
+				const movie = foundMovieList[index];
+				addToWatchlist(movie, button);
+			});
+		});
 	} catch (error) {
 		console.error("Error fetching movies:", error);
 		const loading = document.getElementById("loading");
 		if (loading) {
 			loading.style.display = "none";
 		}
+	}
+}
+
+function addToWatchlist(movieData, button) {
+	// Disable button and show loading state
+	button.disabled = true;
+	const originalText = button.innerHTML;
+	button.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Adding...';
+
+	const watchlist = JSON.parse(localStorage.getItem("watchlist") || "[]");
+
+	// Handle duplicate movie (already in watchlist)
+	if (watchlist.find((m) => m.imdbID === movieData.imdbID)) {
+		alert("Movie already in watchlist!");
+		button.innerHTML = originalText;
+		button.disabled = false;
+		return;
+	} else {
+		watchlist.push({
+			imdbID: movieData.imdbID,
+			title: movieData.Title,
+			poster: movieData.Poster,
+			rating: movieData.imdbRating,
+			runtime: movieData.Runtime,
+			genre: movieData.Genre,
+			plot: movieData.Plot,
+		});
+
+		localStorage.setItem("watchlist", JSON.stringify(watchlist));
+
+		// Success - update button to show it's added
+		button.innerHTML = '<i class="fa fa-check-circle"></i> Added!';
+		setTimeout(() => {
+			button.innerHTML = originalText;
+			button.disabled = false;
+		}, 2000);
 	}
 }
