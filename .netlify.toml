@@ -4,12 +4,7 @@
   command = "npm run build"
   publish = "dist"
 
-# Environment variables - set these in Netlify UI
-# VITE_OMDB_API_KEY
-# VITE_SUPABASE_URL
-# VITE_SUPABASE_ANON_KEY
-
-# Disable secret scanning for this project
-# (Supabase anon keys are designed to be public and used client-side)
+# Environment variables for secrets scanning configuration
+# Supabase anon keys are designed to be public and used client-side
 [build.environment]
-  SECRETS_SCAN_ENABLED = "false"
+  SECRETS_SCAN_OMIT_KEYS = "VITE_SUPABASE_ANON_KEY,VITE_SUPABASE_URL,VITE_OMDB_API_KEY"
