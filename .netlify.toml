@@ -12,4 +12,4 @@
 # Disable secret scanning for this project
 # (Supabase anon keys are designed to be public and used client-side)
 [build.environment]
-  NETLIFY_USE_SYSTEM_SECRETS_SCANNING = "false"
+  SECRETS_SCAN_ENABLED = "false"
