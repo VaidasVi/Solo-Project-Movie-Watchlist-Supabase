@@ -57,8 +57,6 @@ async function findMovies(searchvalue) {
 			foundMovieList.push(movieData);
 		}
 
-		console.log(foundMovieList);
-
 		let html = "";
 
 		foundMovieList.forEach((card, index) => {
