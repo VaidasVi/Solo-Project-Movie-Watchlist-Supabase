@@ -1,3 +1,5 @@
+import { supabase } from "./supabase.js";
+
 const watchlistContainer = document.getElementById("watchlist-container");
 const loading = document.getElementById("loading");
 const emptyState = document.querySelector(".empty-state");
@@ -9,10 +11,24 @@ window.addEventListener("DOMContentLoaded", () => {
 	loadWatchlist();
 });
 
-function loadWatchlist() {
+async function loadWatchlist() {
 	try {
-		// Get watchlist from localStorage
-		const watchlist = JSON.parse(localStorage.getItem("watchlist") || "[]");
+		// Show loading state
+		watchlistContainer.innerHTML = `
+			<div id="loading" style="display: block">
+				<p>Loading...</p>
+			</div>
+		`;
+
+		// Get watchlist from Supabase
+		const { data: watchlist, error } = await supabase
+			.from("watchlist")
+			.select("*")
+			.order("created_at", { ascending: false });
+
+		if (error) {
+			throw error;
+		}
 
 		// Show empty state if no movies
 		if (!watchlist || watchlist.length === 0) {
@@ -35,7 +51,7 @@ function loadWatchlist() {
 		displayWatchlist(watchlist);
 	} catch (error) {
 		console.error("Error loading watchlist:", error);
-		alert("Failed to load watchlist");
+		alert("Failed to load watchlist: " + error.message);
 	}
 }
 
@@ -58,7 +74,7 @@ function displayWatchlist(movies) {
 				<div class="info-container">
 					<p>${movie.runtime}</p>
 					<p>${movie.genre}</p>
-					<button class="remove-btn" data-imdb="${movie.imdbID}">
+					<button class="remove-btn" data-imdb="${movie.imdb_id}" data-id="${movie.id}">
 						<i class="fa fa-minus-circle" aria-hidden="true"></i>
 						Remove
 					</button>
@@ -74,30 +90,26 @@ function displayWatchlist(movies) {
 	const removeButtons = document.querySelectorAll(".remove-btn");
 	removeButtons.forEach((button) => {
 		button.addEventListener("click", () => {
-			const imdbID = button.getAttribute("data-imdb");
-			removeFromWatchlist(imdbID);
+			const id = button.getAttribute("data-id");
+			removeFromWatchlist(id);
 		});
 	});
 }
 
-function removeFromWatchlist(imdbID) {
+async function removeFromWatchlist(id) {
 	try {
-		// Get existing watchlist
-		const watchlist = JSON.parse(localStorage.getItem("watchlist") || "[]");
+		// Delete from Supabase
+		const { error } = await supabase.from("watchlist").delete().eq("id", id);
 
-		// Filter out the movie to remove
-		const updatedWatchlist = watchlist.filter(
-			(movie) => movie.imdbID !== imdbID,
-		);
-
-		// Save updated watchlist
-		localStorage.setItem("watchlist", JSON.stringify(updatedWatchlist));
+		if (error) {
+			throw error;
+		}
 
 		// Reload watchlist display
 		loadWatchlist();
 	} catch (error) {
 		console.error("Error removing from watchlist:", error);
-		alert("Failed to remove from watchlist");
+		alert("Failed to remove from watchlist: " + error.message);
 	}
 }
 
@@ -112,9 +124,18 @@ searchForm.addEventListener("submit", (e) => {
 	}
 });
 
-function searchWatchlist(searchTerm) {
+async function searchWatchlist(searchTerm) {
 	try {
-		const watchlist = JSON.parse(localStorage.getItem("watchlist") || "[]");
+		// Get all watchlist from Supabase
+		const { data: watchlist, error } = await supabase
+			.from("watchlist")
+			.select("*")
+			.order("created_at", { ascending: false });
+
+		if (error) {
+			throw error;
+		}
+
 		const term = searchTerm.toLowerCase();
 
 		// Filter movies that match
@@ -149,5 +170,6 @@ function searchWatchlist(searchTerm) {
 		}
 	} catch (error) {
 		console.error("Error searching watchlist:", error);
+		alert("Failed to search watchlist: " + error.message);
 	}
 }

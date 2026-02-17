@@ -1,5 +1,5 @@
-// Supabase integration - commented out for localStorage implementation
-// import { supabase } from "./supabase.js";
+// Supabase integration
+import { supabase } from "./supabase.js";
 
 const API_KEY = import.meta.env.VITE_OMDB_API_KEY;
 const searchForm = document.getElementById("search-form");
@@ -110,32 +110,43 @@ async function findMovies(searchvalue) {
 	}
 }
 
-function addToWatchlist(movieData, button) {
+async function addToWatchlist(movieData, button) {
 	// Disable button and show loading state
 	button.disabled = true;
 	const originalText = button.innerHTML;
 	button.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Adding...';
 
-	const watchlist = JSON.parse(localStorage.getItem("watchlist") || "[]");
+	try {
+		// Check if movie already exists in Supabase
+		const { data: existingMovie, error: checkError } = await supabase
+			.from("watchlist")
+			.select("*")
+			.eq("imdb_id", movieData.imdbID)
+			.single();
 
-	// Handle duplicate movie (already in watchlist)
-	if (watchlist.find((m) => m.imdbID === movieData.imdbID)) {
-		alert("Movie already in watchlist!");
-		button.innerHTML = originalText;
-		button.disabled = false;
-		return;
-	} else {
-		watchlist.push({
-			imdbID: movieData.imdbID,
-			title: movieData.Title,
-			poster: movieData.Poster,
-			rating: movieData.imdbRating,
-			runtime: movieData.Runtime,
-			genre: movieData.Genre,
-			plot: movieData.Plot,
-		});
+		if (existingMovie) {
+			alert("Movie already in watchlist!");
+			button.innerHTML = originalText;
+			button.disabled = false;
+			return;
+		}
 
-		localStorage.setItem("watchlist", JSON.stringify(watchlist));
+		// Insert movie into Supabase
+		const { data, error } = await supabase.from("watchlist").insert([
+			{
+				imdb_id: movieData.imdbID,
+				title: movieData.Title,
+				poster: movieData.Poster,
+				rating: movieData.imdbRating,
+				runtime: movieData.Runtime,
+				genre: movieData.Genre,
+				plot: movieData.Plot,
+			},
+		]);
+
+		if (error) {
+			throw error;
+		}
 
 		// Success - update button to show it's added
 		button.innerHTML = '<i class="fa fa-check-circle"></i> Added!';
@@ -143,5 +154,10 @@ function addToWatchlist(movieData, button) {
 			button.innerHTML = originalText;
 			button.disabled = false;
 		}, 2000);
+	} catch (error) {
+		console.error("Error adding to watchlist:", error);
+		alert("Failed to add movie to watchlist. Please try again.");
+		button.innerHTML = originalText;
+		button.disabled = false;
 	}
 }
