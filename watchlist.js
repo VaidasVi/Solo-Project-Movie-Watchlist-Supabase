@@ -107,10 +107,9 @@ searchForm.addEventListener("submit", (e) => {
 
 	if (!searchTerm) {
 		loadWatchlist(); // Show all if empty
-		return;
+	} else {
+		searchWatchlist(searchTerm);
 	}
-
-	searchWatchlist(searchTerm);
 });
 
 function searchWatchlist(searchTerm) {
