@@ -1,60 +1,63 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta
-            name="description"
-            content="Movie Watchlist - Search and save your favorite movies"
-        />
-        <title>Movie Watchlist</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-            rel="stylesheet"
-        />
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        />
-        <link rel="stylesheet" href="index.css" />
-    </head>
-    <body>
-        <header>
-            <div class="header-container">
-                <h1>Find your film</h1>
-                <h3><a href="#">My Watchlist</a></h3>
-            </div>
-        </header>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="Movie Watchlist - Search and save your favorite movies"
+		/>
+		<title>Movie Watchlist</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+		/>
+		<link rel="stylesheet" href="index.css" />
+	</head>
+	<body>
+		<header>
+			<div class="header-container">
+				<h1>Find your film</h1>
+				<h3><a href="#">My Watchlist</a></h3>
+			</div>
+		</header>
 
-        <main>
-            <section id="search-section">
-                <form id="search-form">
-                    <input
-                        type="text"
-                        id="search-input"
-                        placeholder="Search for a movie..."
-                        required
-                    />
-                    <button type="submit" id="search-btn">Search</button>
-                </form>
-            </section>
+		<main>
+			<section id="search-section">
+				<form id="search-form">
+					<input
+						type="text"
+						id="search-input"
+						placeholder="Search for a movie..."
+						required
+					/>
+					<button type="submit" id="search-btn">Search</button>
+				</form>
+			</section>
 
-            <section id="results-section">
-                <div id="result-container">
-                    <div class="empty-state">
-                        <i class="fa-solid fa-film"></i>
-                        <p>Start exploring</p>
-                    </div>
-                </div>
-            </section>
-        </main>
+			<section id="results-section">
+				<div id="result-container">
+					<div id="loading" style="display: none">
+						<p>Loading...</p>
+					</div>
+					<div class="empty-state">
+						<i class="fa-solid fa-film"></i>
+						<p>Start exploring</p>
+					</div>
+				</div>
+			</section>
+		</main>
 
-        <footer>
-            <!--<p>&copy; 2026 Movie Watchlist</p>-->
-        </footer>
+		<footer>
+			<!--<p>&copy; 2026 Movie Watchlist</p>-->
+		</footer>
 
-        <script src="index.js" type="module"></script>
-    </body>
+		<script src="index.js" type="module"></script>
+	</body>
 </html>
