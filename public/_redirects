@@ -1,0 +1,3 @@
+# Netlify redirects - serve HTML files directly
+/watchlist    /watchlist.html    200
+/watchlist/   /watchlist.html    200
