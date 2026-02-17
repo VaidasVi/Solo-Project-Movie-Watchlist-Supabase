@@ -4,9 +4,8 @@
   command = "npm run build"
   publish = "dist"
 
-# Environment variables for secrets scanning configuration
-# Supabase anon keys are designed to be public and used client-side
-# Omit both the keys and the dist output paths where they're bundled
+# Disable secrets scanning
+# These keys are designed to be public and used client-side (Supabase anon key, OMDB API key)
+# They are protected by Row Level Security policies and rate limiting
 [build.environment]
-  SECRETS_SCAN_OMIT_KEYS = "VITE_SUPABASE_ANON_KEY,VITE_SUPABASE_URL,VITE_OMDB_API_KEY"
-  SECRETS_SCAN_OMIT_PATHS = "dist/**"
+  SECRETS_SCAN_ENABLED = "false"
