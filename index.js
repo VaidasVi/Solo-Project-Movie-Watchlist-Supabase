@@ -21,7 +21,7 @@ async function findMovies(searchvalue) {
 		}
 
 		const res = await fetch(
-			`http://www.omdbapi.com/?s=${searchvalue}&apikey=${API_KEY}`,
+			`https://www.omdbapi.com/?s=${searchvalue}&apikey=${API_KEY}`,
 		);
 
 		if (!res.ok) {
@@ -47,7 +47,7 @@ async function findMovies(searchvalue) {
 
 		for (const movie of data.Search) {
 			const movieRes = await fetch(
-				`http://www.omdbapi.com/?i=${movie.imdbID}&plot=short&apikey=${API_KEY}`,
+				`https://www.omdbapi.com/?i=${movie.imdbID}&plot=short&apikey=${API_KEY}`,
 			);
 			const movieData = await movieRes.json();
 			foundMovieList.push(movieData);
