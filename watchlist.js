@@ -50,6 +50,7 @@ async function loadWatchlist() {
 		// Display movies
 		displayWatchlist(watchlist);
 	} catch (error) {
+		console.error("Error loading watchlist:", error);
 		alert("Failed to load watchlist: " + error.message);
 	}
 }
@@ -107,6 +108,7 @@ async function removeFromWatchlist(id) {
 		// Reload watchlist display
 		loadWatchlist();
 	} catch (error) {
+		console.error("Error removing from watchlist:", error);
 		alert("Failed to remove from watchlist: " + error.message);
 	}
 }
@@ -167,6 +169,7 @@ async function searchWatchlist(searchTerm) {
 			displayWatchlist(results);
 		}
 	} catch (error) {
+		console.error("Error searching watchlist:", error);
 		alert("Failed to search watchlist: " + error.message);
 	}
 }
