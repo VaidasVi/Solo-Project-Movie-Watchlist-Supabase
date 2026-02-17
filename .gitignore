@@ -5,9 +5,6 @@ node_modules/
 .env
 .env.local
 
-# Supabase (using localStorage instead)
-supabase.js
-
 # OS files
 .DS_Store
 Thumbs.db
