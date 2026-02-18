@@ -286,12 +286,16 @@ a {
 	}
 
 	.result-card {
-		padding: 20px 1.5rem 20px 1.5rem;
+		padding: 20px 0 20px 0;
+		margin: 0 1.5rem;
 		gap: 8px 10px;
 		max-width: 100%;
 		grid-template-columns: 100px 1fr;
 		grid-template-rows: auto auto auto auto;
-		margin: 0 auto;
+	}
+
+	.result-card:first-child {
+		margin-top: 20px;
 	}
 
 	.result-card .poster {
@@ -379,11 +383,15 @@ a {
 	}
 
 	.result-card {
-		padding: 15px 1rem 15px 1rem;
+		padding: 15px 0 15px 0;
+		margin: 0 1rem;
 		grid-template-columns: 90px 1fr;
 		grid-template-rows: auto auto auto auto;
 		gap: 6px 8px;
-		margin: 0 auto;
+	}
+
+	.result-card:first-child {
+		margin-top: 15px;
 	}
 
 	.result-card .poster {
