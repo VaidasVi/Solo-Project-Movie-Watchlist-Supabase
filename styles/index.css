@@ -343,6 +343,7 @@ a {
 		font-size: 13px;
 		line-height: 1.4;
 		margin-top: 8px;
+		padding-right: 5px;
 	}
 }
 
@@ -431,5 +432,6 @@ a {
 		font-size: 12px;
 		line-height: 1.4;
 		margin-top: 6px;
+		padding-right: 5px;
 	}
 }
