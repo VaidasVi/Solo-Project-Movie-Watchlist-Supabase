@@ -365,11 +365,12 @@ a {
 		line-height: 1.4;
 		margin-top: 15px;
 		margin-right: 15px;
+		padding-right: 0;
 	}
 }
 
-/* Mobile devices (≤480px) */
-@media (max-width: 480px) {
+/* Mobile devices (≤600px) */
+@media (max-width: 600px) {
 	header {
 		height: 8rem;
 	}
